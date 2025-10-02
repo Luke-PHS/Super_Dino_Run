@@ -1,17 +1,17 @@
 // Initialize the Kaboom context.
 kaboom({
-    width: 800,
+    width: 900,
     height: 600,
-    background: [0, 100, 200],
+    background: [203, 42, 230],
 });
 
 setGravity(800);
 
 // --- Load Assets ---
-loadSprite("apple", "https://kaboomjs.com/sprites/apple.png");
+loadSprite("dino", "https://kaboomjs.com/sprites/dino.png");
 loadSprite("enemy", "https://kaboomjs.com/sprites/gigagantrum.png");
 loadSprite("coin", "https://kaboomjs.com/sprites/coin.png");
-loadSprite("door", "https://kaboomjs.com/sprites/door.png");
+loadSprite("portal", "https://kaboomjs.com/sprites/portal.png");
 
 // --- Define Custom Components ---
 // By defining patrol() here, it's globally available and can be used by any scene.
@@ -80,9 +80,9 @@ scene("main", ({ level } = { level: 0 }) => {
                 "coin",
             ],
             "D": () => [
-                sprite("door"),
+                sprite("portal"),
                 area(),
-                "door",
+                "portal",
             ],
             // This now correctly uses the globally-defined patrol() function.
             "^": () => [
@@ -107,7 +107,7 @@ scene("main", ({ level } = { level: 0 }) => {
 
     // --- The Player Character ---
     const player = add([
-        sprite("apple"),
+        sprite("dino"),
         pos(100, 100),
         area({ scale: 0.7 }),
         body(),
