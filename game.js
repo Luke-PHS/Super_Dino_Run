@@ -9,8 +9,8 @@ setGravity(800);
 
 // --- Load Assets ---
 loadSprite("dino", "https://kaboomjs.com/sprites/dino.png");
-loadSprite("enemy", "https://kaboomjs.com/sprites/gigagantrum.png");
-loadSprite("coin", "https://kaboomjs.com/sprites/coin.png");
+loadSprite("ghosty", "https://kaboomjs.com/sprites/ghosty.png");
+loadSprite("meat", "https://kaboomjs.com/sprites/meat.png");
 loadSprite("portal", "https://kaboomjs.com/sprites/portal.png");
 
 // --- Define Custom Components ---
@@ -40,12 +40,22 @@ scene("main", ({ level } = { level: 0 }) => {
     // Array of all level layouts
     const LEVELS = [
         [
-            "   $    $    $     ",
+            "   $              D ",
             "                    ",
-            "    =         =   D ",
+            "    =         =     ",
+            "                 $  ",
+            "       ^         =  ",
+            "       =$    $      ",
+            "=========    =======",
             "                    ",
-            "  =    ^  =      =  ",
-            " $           $      ",
+            "      $             ",
+            "      ===           ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "^^^^^^^^^^^^^^^^^^^^",
             "====================",
         ],
         [
@@ -75,9 +85,9 @@ scene("main", ({ level } = { level: 0 }) => {
                 "platform",
             ],
             "$": () => [
-                sprite("coin"),
+                sprite("meat"),
                 area(),
-                "coin",
+                "meat",
             ],
             "D": () => [
                 sprite("portal"),
@@ -86,11 +96,11 @@ scene("main", ({ level } = { level: 0 }) => {
             ],
             // This now correctly uses the globally-defined patrol() function.
             "^": () => [
-                sprite("enemy"),
+                sprite("ghosty"),
                 area(),
                 body(),
                 patrol(),
-                "enemy",
+                "ghosty",
             ],
         }
     };
@@ -100,7 +110,7 @@ scene("main", ({ level } = { level: 0 }) => {
     // --- Score & UI ---
     let score = 0;
     const scoreLabel =add([
-        text("Score:" + score),
+        text("Meat:" + score),
         pos(24,24),
         fixed(),
     ]);
@@ -120,16 +130,16 @@ scene("main", ({ level } = { level: 0 }) => {
     onKeyPress("space", () => { if (player.isGrounded()) { player.jump(650); } });
 
     //--Coin Collecting Logic--
-    player.onCollide("coin", (coin) =>{
-        destroy(coin);
-        score+= 10;
-        scoreLabel.text ="Score: " + score;
+    player.onCollide("meat", (meat) =>{
+        destroy(meat);
+        score+= 20;
+        scoreLabel.text ="Meat: " + score;
 
     });
 
-    player.onCollide("enemy", (enemy, col) => {
+    player.onCollide("ghosty", (ghosty, col) => {
         if (col.isBottom()) {
-            destroy(enemy);
+            destroy(ghosty);
             player.jump(300);
         } else {
             destroy(player);
@@ -137,7 +147,7 @@ scene("main", ({ level } = { level: 0 }) => {
         }
     });
 
-    player.onCollide("door", () => {
+    player.onCollide("portal", () => {
         if (currentLevel + 1 < LEVELS.length) {
             go("main", { level: currentLevel + 1 });
         } else {
