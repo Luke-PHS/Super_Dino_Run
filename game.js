@@ -86,11 +86,12 @@ scene("main", ({ level } = { level: 0 }) => {
             "                    ",
             "^^^^^^^^^^^    ^^^^^",
             "====================",
-        ]
+            
+        ],
     ];
 
     const currentLevel = level;
-
+    
     // Configure what each symbol in the level layout means.
     const levelConf = {
         tileWidth: 47,
@@ -147,7 +148,7 @@ scene("main", ({ level } = { level: 0 }) => {
     // --- Player Controls & Interactions ---
     onKeyDown("left", () => { player.move(-200, 0); });
     onKeyDown("right", () => { player.move(200, 0); });
-    onKeyPress("space", () => { if (player.isGrounded()) { player.jump(650); } });
+    onKeyPress("space", () => { if (player.isGrounded()) { player.jump(500); } });
 
     //--Coin Collecting Logic--
     player.onCollide("meat", (meat) =>{
@@ -168,6 +169,7 @@ scene("main", ({ level } = { level: 0 }) => {
     });
 
     player.onCollide("portal", () => {
+    if (score == 100)
         if (currentLevel + 1 < LEVELS.length) {
             go("main", { level: currentLevel + 1 });
         } else {
