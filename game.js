@@ -12,9 +12,13 @@ loadSprite("dino", "https://kaboomjs.com/sprites/dino.png");
 loadSprite("ghosty", "https://kaboomjs.com/sprites/ghosty.png");
 loadSprite("meat", "https://kaboomjs.com/sprites/meat.png");
 loadSprite("portal", "https://kaboomjs.com/sprites/portal.png");
+loadSound("coin", "/sounds/coin.mp3")
+loadSound("roar", "/sounds/roar.mp3")
 
 // --- Define Custom Components ---
 // By defining patrol() here, it's globally available and can be used by any scene.
+
+
 function patrol() {
     return {
         id: "patrol",
@@ -64,7 +68,7 @@ scene("main", ({ level } = { level: 0 }) => {
             " $          =       ",
             " =                  ",
             "     ^           ^  ",
-            "      =  $  ^ =   $ ",
+            "         $  ^ =   $ ",
             "====================",
             
         ],
@@ -153,6 +157,8 @@ scene("main", ({ level } = { level: 0 }) => {
     //--Coin Collecting Logic--
     player.onCollide("meat", (meat) =>{
         destroy(meat);
+        play("coin")
+
         score+= 20;
         scoreLabel.text ="Meat: " + score;
 
@@ -162,6 +168,7 @@ scene("main", ({ level } = { level: 0 }) => {
         if (col.isBottom()) {
             destroy(ghosty);
             player.jump(300);
+            play("roar");
         } else {
             destroy(player);
             go("lose");
