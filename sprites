@@ -1,0 +1,4 @@
+https://kaboomjs.com/sprites/dino.png");
+loadSprite("ghosty", "https://kaboomjs.com/sprites/ghosty.png");
+loadSprite("meat", "https://kaboomjs.com/sprites/meat.png");
+loadSprite("portal", "https://kaboomjs.com/sprites/portal.png
